@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+site 'http://community.opscode.com/api/v1'
+
+cookbook 'apt'
+cookbook 'git'
+cookbook 'sqlite'
+cookbook 'mysql'
+cookbook 'postgresql'
+cookbook 'database', :git => 'git://github.com/manuelvanrijn/cookbook-database.git', :ref => 'grant-roles'
+cookbook 'nodejs'
+cookbook 'build-essential'
+cookbook 'rvm', :git => 'https://github.com/fnichol/chef-rvm'
+cookbook 'nginx'
