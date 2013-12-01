@@ -1,4 +1,4 @@
-app/**
+homegrown_apps/**/
 chef/cookbooks
 chef/tmp
 chef/Cheffile.lock

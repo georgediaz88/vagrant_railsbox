@@ -13,5 +13,6 @@ run_list(
   "recipe[rvm::system]",
   "recipe[rvm::vagrant]",
   "recipe[database]",
+  "recipe[nginx::source]",
   "recipe[postinstall]"
 )
