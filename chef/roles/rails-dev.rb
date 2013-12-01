@@ -10,9 +10,10 @@ run_list(
   "recipe[postgresql::ruby]",
   "recipe[postgresql::server]",
   "recipe[nodejs::install_from_binary]",
-  "recipe[rvm::system]",
-  "recipe[rvm::vagrant]",
-  "recipe[database]",
+  "recipe[ruby_build]",
+  "recipe[rbenv::system]",
+  "recipe[rbenv::vagrant]",
   "recipe[nginx::source]",
+  "recipe[database]",
   "recipe[postinstall]"
 )

@@ -18,10 +18,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Use for hooking up Nginx/Passenger to Rails App and Capistrano for Deployment
   config.vm.network :private_network, ip: "192.168.30.11"
 
-  # For some reason had to ssh and install new ruby then chef and re-provision
-  # config.vm.provision :shell, :inline => "gem install chef --version 11.6.0"
-  # TD: ruby-2.0.0-p-247 to work with chef latest bleeding version
-
   config.vm.provision :shell, :path => "install.sh"
 
   config.vm.provision :chef_solo do |chef|
@@ -42,10 +38,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           }
         },
         :nginx => {
-          :version => "1.4.1",
+          :version => "1.5.7",
           :dir => "/etc/nginx",
           :log_dir => "/var/log/nginx",
-          :binary => "/opt/nginx-1.4.1/sbin",
+          :binary => "/opt/nginx-1.5.7/sbin",
           :user => "root",
           :init_style => "init",
           :source => {
@@ -58,18 +54,39 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             ]
           },
           :passenger => {
-            :version => "3.0.21",
-            :ruby => "/usr/local/rvm/rubies/ruby-1.9.3-p327/bin/ruby",
-            :root => "/usr/local/rvm/gems/ruby-1.9.3-p327/gems/passenger-3.0.21"
+            :version => "4.0.25",
+            :ruby => "/usr/local/rbenv/shims/ruby"
+            # :ruby => "/usr/local/rvm/rubies/ruby-2.0.0-p353/bin/ruby"
+            # :root => "/usr/local/rvm/gems/ruby-2.0.0-p353/gems/passenger-4.0.25"
           }
         },
-        "rvm" => {
-          "rubies"  => ["1.9.3-p327"],
-          "global_gems" => [
-              { 'name' => 'bundler' },
-              { 'name' => 'rails'}
-          ]
+        "rbenv" => {
+          "global" => "2.0.0-p353",
+          "rubies" => ["2.0.0-p353"],
+          "gems" => {
+            "2.0.0-p353" => [
+              { "name" => "bundler" },
+              { "name" => "rails" }
+            ]
+          }
         }
       }
   end
 end
+
+# Old RVM Settings
+# in rails-dev.rb
+  # "recipe[rvm::system]",
+  # "recipe[rvm::vagrant]",
+  # "recipe[rvm::gem_package]",
+
+# :rvm => {
+#   :rubies  => ["1.9.3-p429"],
+#   :default_ruby => "1.9.3-p429",
+#   :vagrant => { 'system_chef_solo' => '/opt/vagrant_ruby/bin/chef-solo' },
+#   :gems => {
+#     "1.9.3-p429" => [
+#       {'name' => 'bundler'},
+#     ]
+#   }
+# }
